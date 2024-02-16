@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Diseases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            color: rgb(7, 9, 145);
+            padding: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        #diseaseList {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .diseaseItem {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .diseaseName {
+            font-weight: bold;
+        }
+
+        .diseaseDescription {
+            color: #555;
+        }
+
+        #redirectButton {
+            background-color: rgb(231, 235, 11);
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recommended Diseases</h1>
+
+    <div id="diseaseList"></div>
+
+    <!-- Button for redirection -->
+    <button id="redirectButton" style="display: none;">Go to Confirmation Page</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedSymptom = urlParams.get('symptom');
+            const recommendedDiseases = getRecommendedDiseases(selectedSymptom);
+
+            renderDiseases(recommendedDiseases);
+
+            function getRecommendedDiseases(symptom) {
+                const diseases = {
+                    "Abdomen pain, night sweats and fever": [
+                        { name: "Gastroenteritis", description: "This common bacterial infection of the stomach and intestines can cause symptoms like nausea, vomiting, and temporary loss of appetite. It tends to improve within a few days with proper rest and hydration." },
+                        { name: "Food Poisoning", description: "Consuming contaminated food can lead to food poisoning, resulting in symptoms such as nausea, vomiting, and decreased appetite. Most cases are not severe and resolve on their own, but some cases require medical attention." },
+                        { name: "Stress or Anxiety", description: "Emotional stress can sometimes manifest as physical symptoms including nausea and reduced appetite. Managing stress through relaxation techniques may help alleviate these symptoms." },
+                        { name: "Gastroesophageal Reflux disease(GERD)", description: "GERD occurs when stomach acid flows back into the esophagus causing irritation. Symptoms may include heartburn and a decreased appetite. Lifestyle changes and medications can often manage GERD efficiently." },
+                        { name: "Gallbladder disease", description: "Conditions such as gallstones can lead to symptoms like vomiting and loss of appetite. Gallbladder issues may require medical intervention, and treatment options may range from dietary changes to surgery." }
+                    ],
+                    "Feeling like to vomit and lack of appetite": [
+                        { name: "Viral Gastroenteritis (Stomach Flu)", description: "A common viral infection affecting the stomach and intestines, leading to symptoms like nausea, vomiting, and a temporary loss of appetite. Typically, it resolves on its own within a few days with rest and proper hydration." },
+                        { name: "Peptic Ulcer Disease", description: "Ulcers in the stomach or small intestine can cause nausea, vomiting, and a lack of appetite. Treatment may involve medications to reduce stomach acid and, in some cases, antibiotics." },
+                        { name: "Food Poisoning", description: "Consuming contaminated food can result in food poisoning, causing symptoms such as nausea, vomiting, and a decreased appetite. Most cases are mild and self-limiting, but severe cases may require medical attention." },
+                        { name: "Gastrointestinal Disorders (e.g., Inflammatory Bowel Disease)", description: "Conditions like Crohn's disease or ulcerative colitis can cause persistent gastrointestinal symptoms, including nausea and appetite loss. These conditions may require ongoing medical management and monitoring." },
+                        { name: "Stress or Anxiety", description: "Emotional stress or anxiety can manifest physically, leading to symptoms like nausea and a reduced appetite. Managing stress through relaxation techniques or seeking professional help may help alleviate these symptoms." }
+                    ],
+                    "Dark urine, yellowing of skin & eyes and pale stools": [
+                        { name: "Jaundice (Icterus)", description: "Yellowing of the skin and eyes due to an excess of bilirubin, a yellow pigment produced during the breakdown of red blood cells." },
+                        { name: "Liver Infections", description: "Infections affecting the liver can lead to inflammation and impaired liver function." },
+                        { name: "Biliary Obstruction", description: "Blockage of the bile ducts, which can affect the flow of bile and result in jaundice." },
+                        { name: "Liver Cirrhosis", description: "Scarring of the liver tissue, often resulting from long-term liver damage." },
+                        { name: "Hemolytic Anemia", description: "Accelerated breakdown of red blood cells, leading to an increase in bilirubin levels." }
+                    ],
+                    "Bloating, burning stomach pain, weight loss and Indigestion": [
+                        { name: "Gastritis", description: "Inflammation of the stomach lining." },
+                        { name: "Peptic Ulcer Disease", description: "Open sores that develop on the inner lining of the stomach or the upper part of the small intestine." },
+                        { name: "Gastroesophageal Reflux Disease (GERD)", description: "Chronic condition where stomach acid flows back into the esophagus, causing irritation." },
+                        { name: "Inflammatory Bowel Disease (Crohn's Disease or Ulcerative Colitis)", description: "Chronic inflammation of the gastrointestinal tract." },
+                        { name: "Celiac Disease", description: "Autoimmune disorder triggered by the ingestion of gluten, leading to damage in the small intestine." }
+                    ],
+                    "Sustained fever, constipation, rash and enlarged liver": [
+                        { name: "Autoimmune Diseases", description: "Conditions where the immune system mistakenly attacks the body's own tissues." },
+                        { name: "Inflammatory Bowel Disease (IBD)", description: "Chronic inflammation of the gastrointestinal tract." },
+                        { name: "Drug Reaction or Allergic Response", description: "Some medications or allergic reactions can lead to a combination of symptoms." },
+                        { name: "Hemophagocytic Lymphohistiocytosis (HLH)", description: "A rare disorder characterized by an overactive immune system." },
+                        { name: "Toxic Megacolon", description: "A severe complication of inflammatory bowel disease, leading to the enlargement of the colon." }
+                    ],
+                    "Increased thirst, frequent urination, blurred vision and numbness in hands": [
+                        { name: "Diabetes Mellitus", description: "A chronic condition characterized by high blood sugar levels." },
+                        { name: "Diabetes Insipidus", description: "A rare disorder involving an inability to properly regulate water balance in the body." },
+                        { name: "Hyperglycemia (High Blood Sugar)", description: "Elevated levels of glucose in the blood, often associated with uncontrolled diabetes." },
+                        { name: "Peripheral Neuropathy", description: "Nerve damage that can cause numbness, tingling, and pain, often in the hands and feet." },
+                        { name: "Thyroid Disorders (Hyperthyroidism)", description: "Overactivity of the thyroid gland." }
+                    ],
+                    "Cough, running nose and sneezing": [
+                        { name: "Influenza (Flu)", description: "A viral infection affecting the upper respiratory tract." },
+                        { name: "Allergic Rhinitis (Hay Fever)", description: "An allergic reaction to airborne allergens, such as pollen." },
+                        { name: "Pertussis (Whooping Cough)", description: "A highly contagious bacterial infection affecting the respiratory system." },
+                        { name: "Sinusitis", description: "Inflammation of the sinuses, often following a viral infection or allergy." },
+                        { name: "Respiratory Syncytial Virus (RSV)", description: "A common respiratory virus, especially affecting young children and older adults." }
+                    ],
+                    "Dehydration, fever, fatigue and body ache": [
+                        { name: "Infectious Diseases (e.g., Flu or Viral Infections)", description: "Viral infections, such as the flu, can cause a range of symptoms including fever, body aches, fatigue, and dehydration due to increased fluid loss." },
+                        { name: "Gastroenteritis", description: "Inflammation of the stomach and intestines, often caused by viral or bacterial infections." },
+                        { name: "Urinary Tract Infection (UTI)", description: "Infections affecting the urinary system can cause symptoms like fever, fatigue, and body ache." },
+                        { name: "Malaria", description: "A parasitic infection transmitted through mosquito bites. Symptoms may include fever, body aches." },
+                        { name: "Chronic Fatigue Syndrome (CFS)", description: "A complex disorder characterized by persistent, unexplained fatigue that is not relieved by rest." }
+                    ],
+                    "Dizziness, fainting and clammy pale skin": [
+                        { name: "Orthostatic Hypotension", description: "A sudden drop in blood pressure upon standing, leading to dizziness, fainting, and sometimes clammy pale skin." },
+                        { name: "Vasovagal Syncope", description: "A temporary drop in heart rate and blood pressure, often triggered by emotional stress, pain, or the sight of blood." },
+                        { name: "Hypoglycemia", description: "Low blood sugar levels can result in dizziness, fainting, and clammy pale skin." },
+                        { name: "Anemia", description: "A deficiency of red blood cells or hemoglobin can lead to reduced oxygen delivery to tissues, causing symptoms such as dizziness, fainting, and pale skin." },
+                        { name: "Dehydration", description: "Insufficient fluid intake can lead to low blood volume, contributing to dizziness, fainting, and clammy pale skin. Dehydration can result from various causes, including vomiting, diarrhea, or inadequate fluid intake." }
+                    ],
+                    "Shortness of breath, cough often with phlegm, chest pain and fast heart rate": [
+                        { name: "Pneumonia", description: "Inflammation of the lungs, often caused by bacterial, viral, or fungal infections." },
+                        { name: "Chronic Obstructive Pulmonary Disease (COPD)", description: "A group of progressive lung diseases, including chronic bronchitis and emphysema." },
+                        { name: "Disease6", description: "Description for Disease6." },
+                        { name: "Lung Cancer", description: "Cancerous growth in the lungs may lead to symptoms such as persistent cough, chest pain, shortness of breath, and an increased heart rate." },
+                        { name: "Myocardial Infarction (Heart Attack)", description: "Myocardial Infarction (Heart Attack)." },
+                        { name: "Acute Bronchitis", description: "Inflammation of the bronchial tubes, often due to viral infections. Symptoms include cough with phlegm, chest discomfort, shortness of breath, and a mildly increased heart rate." }
+                    ]
+                    // ... (other diseases)
+                };
+
+                return diseases[symptom] || [];
+            }
+
+            function renderDiseases(diseasesArray) {
+                const diseaseListContainer = document.getElementById("diseaseList");
+                diseaseListContainer.innerHTML = "";
+
+                if (diseasesArray.length === 0) {
+                    diseaseListContainer.innerHTML = "<p>No diseases found for selected symptoms.</p>";
+                    return;
+                }
+
+                diseasesArray.forEach((disease) => {
+                    const div = document.createElement("div");
+                    div.classList.add("diseaseItem");
+
+                    const name = document.createElement("div");
+                    name.classList.add("diseaseName");
+                    name.textContent = disease.name;
+
+                    const description = document.createElement("div");
+                    description.classList.add("diseaseDescription");
+                    description.textContent = disease.description;
+
+                    div.appendChild(name);
+                    div.appendChild(description);
+
+                    diseaseListContainer.appendChild(div);
+                });
+
+                // Show the button after displaying diseases
+                document.getElementById("redirectButton").style.display = "block";
+            }
+
+            // Redirect function
+            function redirectToConfirmationPage() {
+                // Redirect to another page (e.g., confirmation.html)
+                window.location.href = "medical3.html";
+            }
+
+            // Attach click event listener to the button
+            document.getElementById("redirectButton").addEventListener("click", redirectToConfirmationPage);
+        });
+    </script>
+</body>
+</html>
