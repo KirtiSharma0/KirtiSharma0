@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     .p1{
+        margin-top: 600px;
+     }
+      h1 {
+            text-align: center; /* Center the text */
+            color: aqua;
+            font-style: italic;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            position: absolute; /* Position absolutely */
+            top: 30%; /* Center vertically */
+            right: 0; /* Align to the right */
+            transform: translate(0, -50%); /* Center vertically using transform */
+            margin-right: 40px;
+              }
+              body{
+              background-image: url('black.jpg');
+               background-size: cover;
+               background-position: center;
+               padding: 50px;
+                background-repeat: inherit;
+             font-family: Arial, Helvetica, sans-serif;
+             box-sizing: border-box;
+          }
+          .big-button{
+             padding: 20px 40px;
+             font-size: 24px;
+             background-color: #0a0227;
+             color: white;
+             border: none;
+             border-radius: 10px;
+             cursor: pointer;
+             text-align: center;
+             text-decoration: none;
+              margin-left: 650px;
+              margin-top: 200px;
+              box-shadow: 0 0 5px cyan, 0 0 25px cyan;
+           }
+           .big-button:hover{
+             box-shadow: 0 0 5px cyan, 0 0 25px cyan,0 0 50px cyan, 0 0 100px cyan, 0 0 200px cyan;
+           }
+            p{
+                font-size: x-large;
+                font-style: italic;
+                color: cornsilk;
+                margin-left:0%;
+                margin-top: 0%;
+
+            }
+    </style>
+</head>
+<body>
+     <p>Your health is our priority !! We care about it.</p>
+    <h1><b>WELCOME TO <br>MEDICAL CENTER</b></h1>
+     <button class="big-button">HIT ME TO PROCEED</button>
+
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector(".big-button").addEventListener("click", function () {
+                // You can add more validation logic here before redirecting
+                window.location.href = " medical form.html";
+            });
+        });
+    </script>
+</body>
+</html>
